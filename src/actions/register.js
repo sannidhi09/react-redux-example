@@ -1,6 +1,7 @@
 import { Constants } from '../constants';
 import { userService } from '../service';
 import { history } from '../helpers';
+import { alertAction } from './alert';
 
 function request() { 
     return { 
@@ -32,6 +33,7 @@ function register (userDetails){
             },
             error => {
                 dispatch(requestfailure());
+                dispatch(alertAction.error(error.toString()));
             }
         )
     }

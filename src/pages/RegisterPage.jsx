@@ -82,7 +82,8 @@ class RegisterPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isLoading: state.register.registering
+        isLoading: state.register.registering,
+        error: state.register.error
     };
 }
 

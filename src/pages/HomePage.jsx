@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 class HomePage extends React.Component {
 
@@ -9,6 +10,7 @@ class HomePage extends React.Component {
         return(
             <div className="home_page">
                 <p>You're logged in with React!!</p>
+                <Button>Logout</Button>
             </div>
         );
     }

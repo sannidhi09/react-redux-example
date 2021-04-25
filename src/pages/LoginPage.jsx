@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import { login } from '../actions';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -12,8 +14,20 @@ class LoginPage extends React.Component {
         }
     }
 
+    isValid = () => {
+        if(this.state.username.length !== 0 && this.state.password.length !==0){
+            return true
+        }else{
+            return false
+        }
+    }
+
     handleSubmit = () => {
-        // this.props.login(username, password);
+        if(this.isValid()) {
+            this.props.login(this.state.username, this.state.password);
+        }else{
+            alert('Username and password are requried. Please do fill');
+        }
     }
 
     handleInputChange = (event) => {
@@ -24,21 +38,26 @@ class LoginPage extends React.Component {
 
     render() {
         return(
-            <div className="login_page">
+            <div className="login_page" style={{alignContent:'center'}}>
                 <h2>Login Page</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Name:
-                        <input name="username" type="text" value={this.state.username} onChange={this.handleInputChange}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Password:
-                        <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}></input>
-                    </label>
-                    <input type="submit" value="Login"/>
-                    <Link to="/register" className="btn btn-link">Register</Link>
-                </form>
+                <label>
+                    Name:
+                    <input name="username" type="text" value={this.state.username} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <Button 
+                    variant="primary" 
+                    disabled={this.props.isLoading} 
+                    onClick={!this.props.isLoading ? this.handleSubmit : null} 
+                > 
+                    {this.props.isLoading ? 'Loading…' : 'Login'}
+                </Button>
+                <Link to="/register" className="btn btn-link">Register</Link>
             </div>
         );
     }
@@ -46,12 +65,12 @@ class LoginPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-
+        isLoading: state.login.logging
     };
 }
 
 const mapDispatchToProps = {
-
+    login: login
 };
 
 const connectedApp = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
