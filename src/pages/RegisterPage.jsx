@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import { regActions } from '../actions';
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -8,25 +10,35 @@ class RegisterPage extends React.Component {
 
         this.state = {
             user : {
+                firstname: '',
+                lastname: '',
                 username: '',
                 password: ''
             }
         }
     }
 
-    handleSubmit = () => {
-        if(this.state.user.username.length != 0 && this.state.user.password.length != 0){
-
+    isValid = () => {
+        if(this.state.user.firstname.length !== 0 && this.state.user.lastname.length !==0 && this.state.user.username.length !== 0 && this.state.user.password.length !== 0){
+            return true
         }else{
-            alert('Username or Password should be empty. Please do fill');
+            return false
+        }
+    }
+
+    handleSubmit = () => {
+        if(this.isValid()) {
+            this.props.register(this.state.user);
+        }else{
+            alert('All fields are requried. Please do fill');
         }
     }
 
     handleInputChange = (event) => {
         this.setState({
             user: {
-                ...user,
-                [event.target.name]: event.target.name
+                ...this.state.user,
+                [event.target.name]: event.target.value
             }
         });
     }
@@ -35,20 +47,48 @@ class RegisterPage extends React.Component {
         return (
             <div className="register_page">
                 <h2>Register Page</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Name:
-                        <input name="username" type="text" value={this.state.user.username} onChange={this.handleInputChange}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Password:
-                        <input name="password" type="password" value={this.state.user.password} onChange={this.handleInputChange}></input>
-                    </label>
-                    <input type="submit" value="Register"/>
-                    <Link to="/login" className="btn btn-link">Login</Link>
-                </form>
+                <label>
+                    First Name:
+                    <input name="firstname" type="text" value={this.state.user.firstname} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <label>
+                    Last Name:
+                    <input name="lastname" type="text" value={this.state.user.lastname} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <label>
+                    Username:
+                    <input name="username" type="text" value={this.state.user.username} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input name="password" type="password" value={this.state.user.password} onChange={this.handleInputChange}></input>
+                </label>
+                <br />
+                <Button 
+                    variant="primary" 
+                    disabled={this.props.isLoading} 
+                    onClick={!this.props.isLoading ? this.handleSubmit : null} 
+                > 
+                    {this.props.isLoading ? 'Loading…' : 'Register'}
+                </Button>
+                <Link to="/login" className="btn btn-link">Login</Link>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        isLoading: state.register.registering
+    };
+}
+
+const mapDispatchToProps = {
+    register: regActions.register
+};
+
+const connectedApp = connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export { connectedApp as RegisterPage };

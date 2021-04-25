@@ -43,3 +43,16 @@ class LoginPage extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+
+    };
+}
+
+const mapDispatchToProps = {
+
+};
+
+const connectedApp = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export { connectedApp as LoginPage };

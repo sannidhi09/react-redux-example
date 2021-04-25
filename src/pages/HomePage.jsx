@@ -13,3 +13,16 @@ class HomePage extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+
+    };
+}
+
+const mapDispatchToProps = {
+
+};
+
+const connectedApp = connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export { connectedApp as HomePage };
