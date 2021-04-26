@@ -38,18 +38,20 @@ class LoginPage extends React.Component {
 
     render() {
         return(
-            <div className="login_page" style={{textAlign:'center',marginTop:'20%'}}>
+            <div className="login_page" style={{textAlign:'center',marginTop:'15%',marginLeft:'40%',display:'inline-grid'}}>
                 <h2>Login Page</h2>
-                <label>
-                    Name:
-                    <input name="username" type="text" value={this.state.username} onChange={this.handleInputChange}></input>
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}></input>
-                </label>
-                <br />
+                <div className="form" style={{textAlign:'right'}}>
+                    <label>
+                        Name:
+                        <input name="username" type="text" value={this.state.username} onChange={this.handleInputChange}></input>
+                    </label>
+                    <br />
+                    <label>
+                        Password:
+                        <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}></input>
+                    </label>
+                    <br />
+                </div>
                 <Button 
                     variant="primary" 
                     disabled={this.props.isLoading} 

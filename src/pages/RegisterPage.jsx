@@ -45,23 +45,20 @@ class RegisterPage extends React.Component {
 
     render() {
         return (
-            <div className="register_page" style={{textAlign:'center',marginTop:'20%'}}>
+            <div className="register_page" style={{textAlign:'center',marginTop:'15%',marginLeft:'40%',display:'inline-grid'}}>
                 <h2>Register Page</h2>
                 <label>
                     First Name:
                     <input name="firstname" type="text" value={this.state.user.firstname} onChange={this.handleInputChange}></input>
                 </label>
-                <br />
                 <label>
                     Last Name:
                     <input name="lastname" type="text" value={this.state.user.lastname} onChange={this.handleInputChange}></input>
                 </label>
-                <br />
                 <label>
                     Username:
                     <input name="username" type="text" value={this.state.user.username} onChange={this.handleInputChange}></input>
                 </label>
-                <br />
                 <label>
                     Password:
                     <input name="password" type="password" value={this.state.user.password} onChange={this.handleInputChange}></input>
