@@ -45,7 +45,7 @@ class RegisterPage extends React.Component {
 
     render() {
         return (
-            <div className="register_page">
+            <div className="register_page" style={{textAlign:'center',marginTop:'20%'}}>
                 <h2>Register Page</h2>
                 <label>
                     First Name:

@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
 
     render() {
         return(
-            <div className="login_page" style={{alignContent:'center'}}>
+            <div className="login_page" style={{textAlign:'center',marginTop:'20%'}}>
                 <h2>Login Page</h2>
                 <label>
                     Name:
