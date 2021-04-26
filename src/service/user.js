@@ -18,17 +18,14 @@ function login(username, password) {
         });
 }
 
-function logout() {
-    localStorage.removeItem('user');
+function getCurrentUser() {
+    return JSON.parse(localStorage.user).username;
 }
 
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${API_URL}/users`, requestOptions).then(handleResponse);
+function logout() {
+    localStorage.removeItem('user');
+    // eslint-disable-next-line no-restricted-globals
+    location.reload(true);
 }
 
 function getByUsername(username) {
@@ -37,6 +34,7 @@ function getByUsername(username) {
         headers: authHeader()
     };
 
+    console.log("Hello");
     return fetch(`${API_URL}/users/${username}`, requestOptions).then(handleResponse);
 }
 
@@ -51,13 +49,13 @@ function register(user) {
 }
 
 function handleResponse(response) {
+    console.log(response);
     return response.text().then(text => {
+        console.log(text);
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {
                 logout();
-                // eslint-disable-next-line no-restricted-globals
-                location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;
@@ -71,6 +69,6 @@ export const userService = {
     login,
     logout,
     register,
-    getAll,
-    getByUsername
+    getByUsername,
+    getCurrentUser
 };

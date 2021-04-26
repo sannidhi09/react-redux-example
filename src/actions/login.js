@@ -1,7 +1,7 @@
-
 import { Constants } from '../constants';
 import { userService } from '../service';
 import { history } from '../helpers';
+import { alertAction } from './alert';
 
 function loginRequest() {
     return {
@@ -15,10 +15,9 @@ function loginSucess() {
     }
 }
 
-function loginFailure(errorMsg) {
+function loginFailure() {
     return {
-        type: Constants.LOGIN_FAILURE,
-        error: errorMsg
+        type: Constants.LOGIN_FAILURE
     }
 }
 
@@ -28,17 +27,20 @@ export function login(username, password) {
 
         userService.login(username, password).then(
             userDetails => {
-                console.log(userDetails);
                 dispatch(loginSucess());
                 history.push('/');
             }, error => {
-                dispatch(loginFailure(error.toString()));
+                dispatch(loginFailure());
+                dispatch(alertAction.error(error.toString()));
             }
         );
     }
 }
 
 export function logout() {
-    userService.logout();
-    return { type: Constants.LOGOUT };
+    return dispatch => {
+        userService.logout();
+        dispatch(() => {return { type: Constants.LOGOUT }});
+        dispatch(() => {return { type: Constants.CLEAR_USER_DETAILS}});
+    }
 }

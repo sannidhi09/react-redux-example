@@ -29,25 +29,17 @@ export function configureBackend() {
                     return;
                 }
 
-                // get Users
-                if (url.endsWith('/users') && opts.method === 'GET') {
-                    if (opts.headers && opts.headers.Authorization === 'Bearer user-token') {
-                        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users))});
-                    } else {
-                        reject('Unauthorised');
-                    }
-
-                    return;
-                }
                 // get user by username
-                if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
+                if (url.match(/\/users\/[a-z0-9]+$/) && opts.method === 'GET') {
                     if (opts.headers && opts.headers.Authorization === 'Bearer user-token') {
                         let urlParts = url.split('/');
-                        let username = parseInt(urlParts[urlParts.length - 1]);
+                        console.log(urlParts);
+                        let username = urlParts[urlParts.length - 1];
+                        console.log(username);
                         let matchedUsers = users.filter(user => { return user.username === username; });
                         let user = matchedUsers.length ? matchedUsers[0] : null;
-
-                        resolve({ ok: true, text: () => JSON.stringify(user)});
+                        console.log(user);
+                        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(user))});
                     } else {
                         reject('Unauthorised');
                     }
